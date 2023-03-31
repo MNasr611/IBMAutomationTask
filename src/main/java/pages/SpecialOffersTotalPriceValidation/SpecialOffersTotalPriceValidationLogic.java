@@ -24,7 +24,7 @@ public class SpecialOffersTotalPriceValidationLogic extends SpecialOffersTotalPr
                 String hrefs = productItems.get(i).findElement(By.xpath("//a[@class='product-item-link']")).getAttribute("href");
                 System.out.println("Product Link Is :" + hrefs);
                 productItems.get(i).findElement(By.xpath("//div[@class='qty-selector-instock']")).click();
-                price =+ price ;
+                price += price ;
             }
 
         }
