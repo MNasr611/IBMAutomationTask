@@ -5,10 +5,10 @@ import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import utils.WebDriverFactory;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -22,13 +22,9 @@ public class DriverFactory {
     final private static String dockerURL = "http://localhost:4444/wd/hub";
 
 
-    public WebDriver createDriver() {
-        // run in sequential mode locally
-        driver = WebDriverFactory.createChromeWebDriver();
-        return driver;
-    }
 
-    public ThreadLocal<WebDriver> createThreadDriver() {
+
+    public ThreadLocal<WebDriver> createChromeThreadDriver() {
         //ThreadLocal for running in parallel mode locally
         WebDriverManager.chromedriver().reset();
         WebDriverManager.chromedriver().setup();
@@ -42,24 +38,20 @@ public class DriverFactory {
         return webDriver;
     }
 
-    public WebDriver createRemoteDriver(){
-        // for sequential mode exec on remote
-        DesiredCapabilities cap = new DesiredCapabilities();
-        final ChromeOptions chromeOptions = new ChromeOptions();
-        chromeOptions.addArguments("--headless");
-        chromeOptions.addArguments("--no-sandbox");
-        chromeOptions.addArguments("--disable-dev-shm-usage");
-        //to make the run not affected with limited resources
-        chromeOptions.addArguments("--test-type");
-        chromeOptions.addArguments("--ignore-ssl-errors=yes");
-        chromeOptions.addArguments("--ignore-certificate-errors");
-        cap.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
-        // to add the options to capabilities
-        driver = WebDriverManager.chromedriver().capabilities(cap).remoteAddress("http://localhost:4444/wd/hub").create();
-        // this creates an instance from chromeDriver on remote using the WebDriverManager ( in case no chromeDriver setuped )
-        return  driver;
-        // assign it to normal webdriver
+    public ThreadLocal<WebDriver> createFireFoxThreadDriver() {
+        //ThreadLocal for running in parallel mode locally
+        WebDriverManager.firefoxdriver().reset();
+        WebDriverManager.firefoxdriver().setup();
+        final FirefoxOptions options = new FirefoxOptions();
+        options.addArguments("--test-type");
+        options.addArguments("--no-sandbox");
+//        options.addArguments("--remote-allow-origins=*");
+
+//        options.addArguments("--headless");
+        webDriver.set(new FirefoxDriver(options));
+        return webDriver;
     }
+
 
 
     public ThreadLocal<WebDriver> createRemoteThreadChromeDriver() throws MalformedURLException {
