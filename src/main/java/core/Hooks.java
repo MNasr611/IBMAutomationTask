@@ -48,9 +48,9 @@ public class Hooks {
 
         if (!scenario.getId().contains(" ")) {
             if (config.getBrowser().equalsIgnoreCase("Chrome")) {
-                setDriver(factory.createThreadDriver());
+                setDriver(factory.createChromeThreadDriver());
             } else if (config.getBrowser().equalsIgnoreCase("FireFox")) {
-                setDriver(factory.createThreadDriver());
+                setDriver(factory.createFireFoxThreadDriver());
             }
             if (scenario.getSourceTagNames().contains("@Client")) {
                 System.out.println("config.getClient_url() :" + config.getUrl()) ;
