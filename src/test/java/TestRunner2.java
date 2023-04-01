@@ -27,26 +27,26 @@ public class TestRunner2 extends AbstractTestNGCucumberTests {
         return super.scenarios();
     }
 
-//    @BeforeTest
-//    public void startDockerHub() throws IOException, InterruptedException {
-//        if (Hooks.isServerUP() == false) {
-//            // if false which means server is down
-//            dockerHandling.startServer();
-//            //isServerUP() should be true after startServer()
-//            System.out.println("Server Started");
-//            dockerHandling.scaleInstances();
-//        }
-//    }
+    @BeforeTest
+    public void startDockerHub() throws IOException, InterruptedException {
+        if (Hooks.isServerUP() == false) {
+            // if false which means server is down
+            dockerHandling.startServer();
+            //isServerUP() should be true after startServer()
+            System.out.println("Server Started");
+            dockerHandling.scaleInstances();
+        }
+    }
 
 
-//    @AfterTest
-//    public void endDockerHub() throws IOException, InterruptedException {
-//        if (Hooks.isServerUP() == true) {
-//            dockerHandling.stopServer();
-//            //isServerUp() should be false after stopServer()
-//            System.out.println("Server Quit");
-//        }
-//    }
+    @AfterTest
+    public void endDockerHub() throws IOException, InterruptedException {
+        if (Hooks.isServerUP() == true) {
+            dockerHandling.stopServer();
+            //isServerUp() should be false after stopServer()
+            System.out.println("Server Quit");
+        }
+    }
 
 
 }
